@@ -26,6 +26,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let inputUsername = usernameTextField.text!.lowercased()
         let inputPassword = passwordTextField.text!
         
+        if (inputUsername.isEmpty || inputPassword.isEmpty) {
+            let alert = UIAlertController(title: "Blank credentials", message: "Please fill in a valid username and password.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            
+            return
+        }
+        
+        //backdoor
         if (inputUsername == "admin" && inputPassword == "1234") {
             UserDefaults.standard.set(inputUsername, forKey:"userId");
             UserDefaults.standard.synchronize();
@@ -34,8 +43,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             let tabBarController = storyBoard.instantiateViewController(withIdentifier: "tabBarController") as! TabBarController
             self.present(tabBarController, animated:true, completion:nil)
-            
-            
         }
         
         let userReference = FirestoreReferenceManager.users.document(inputUsername)

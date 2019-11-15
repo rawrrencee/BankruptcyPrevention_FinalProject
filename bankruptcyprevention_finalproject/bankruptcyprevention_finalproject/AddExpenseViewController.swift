@@ -24,6 +24,20 @@ class AddExpenseViewController: UIViewController {
         let inputDescription = descriptionTextField.text!
         let inputDate = datePicker.date
         
+        if (inputAmount.isNaN) {
+            let alert = UIAlertController(title: "Not a number", message: "Please enter a number for the amount.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            
+            return
+        }
+        
+        if (inputDescription.isEmpty) {
+            let alert = UIAlertController(title: "Description is empty", message: "Please enter a description.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+        }
+        
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
 
         save(amount: inputAmount, expenseDescription: inputDescription, userId: userId, date: inputDate)

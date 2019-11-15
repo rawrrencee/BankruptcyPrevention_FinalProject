@@ -460,6 +460,17 @@
                                     <action selector="logoutButton:" destination="vsg-0u-A6f" eventType="touchUpInside" id="3l5-J4-cEw"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AWb-Iy-uBf">
+                                <rect key="frame" x="347" y="355" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Save my data to the cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3G-FA-9Y1">
+                                <rect key="frame" x="20" y="360" width="224" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="2mj-mg-MQj"/>
@@ -468,7 +479,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V4Y-9F-6sO" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2197" y="860"/>
+            <point key="canvasLocation" x="2195.6521739130435" y="859.82142857142856"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wEc-65-6bM">
