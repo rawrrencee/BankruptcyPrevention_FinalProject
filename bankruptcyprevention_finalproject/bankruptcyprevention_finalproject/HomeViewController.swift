@@ -38,11 +38,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //2
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "Expense")
+        let userId = UserDefaults.standard.object(forKey: "userId") as! String
+        print(userId)
+        fetchRequest.predicate = NSPredicate(format: "userId == %@", userId)
         
         //3
         do {
             expenses = try managedContext.fetch(fetchRequest)
-            print(expenses.count)
             expenseTableView.reloadData()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
@@ -58,6 +60,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let expense = expenses[indexPath.row]
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
@@ -75,7 +78,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell
     }
-
+    
 }
 
 extension Double

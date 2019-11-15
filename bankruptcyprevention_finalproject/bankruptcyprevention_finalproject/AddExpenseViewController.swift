@@ -20,7 +20,13 @@ class AddExpenseViewController: UIViewController {
     }
     @IBAction func addButtonPressed(_ sender: Any) {
         
-        let inputAmount = Double(amountTextField.text!)!
+        guard let inputAmount:Double = Double(amountTextField.text!) else {
+            let alert = UIAlertController(title: "Not a number", message: "Please enter a number for the amount.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            
+            return
+        }
         let inputDescription = descriptionTextField.text!
         let inputDate = datePicker.date
         
@@ -36,6 +42,8 @@ class AddExpenseViewController: UIViewController {
             let alert = UIAlertController(title: "Description is empty", message: "Please enter a description.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
             self.present(alert, animated: true)
+            
+            return
         }
         
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
