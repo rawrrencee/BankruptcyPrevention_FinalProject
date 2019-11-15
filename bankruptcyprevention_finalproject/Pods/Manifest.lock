@@ -1,4 +1,5 @@
 PODS:
+  - BCryptSwift (1.1)
   - BoringSSL-GRPC (0.0.3):
     - BoringSSL-GRPC/Implementation (= 0.0.3)
     - BoringSSL-GRPC/Interface (= 0.0.3)
@@ -98,6 +99,7 @@ PODS:
     - gRPC-Core/Interface (= 1.21.0)
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.21.0)
+  - IQKeyboardManagerSwift (6.5.4)
   - leveldb-library (1.22)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
@@ -107,11 +109,14 @@ PODS:
   - Protobuf (3.10.0)
 
 DEPENDENCIES:
+  - BCryptSwift
   - Firebase/Core
   - Firebase/Firestore
+  - IQKeyboardManagerSwift
 
 SPEC REPOS:
   trunk:
+    - BCryptSwift
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAnalytics
@@ -127,11 +132,13 @@ SPEC REPOS:
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
+    - IQKeyboardManagerSwift
     - leveldb-library
     - nanopb
     - Protobuf
 
 SPEC CHECKSUMS:
+  BCryptSwift: f69992ea5685f6714260842c2770688043b89ab2
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   Firebase: da031bc7012374e3bed17a6731b89327b29863b9
   FirebaseAnalytics: 4e53a7eb7b76bc703c4d9239bc964545e9b23361
@@ -147,10 +154,11 @@ SPEC CHECKSUMS:
   GoogleUtilities: 547a86735c6f0ee30ad17e94df4fc21f616b71cb
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
+  IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
 
-PODFILE CHECKSUM: e4c2fdff3f09ea87c773d5d987812fe18f3d35b7
+PODFILE CHECKSUM: 58cc517f402aef7772cdc42299df881270724c9f
 
 COCOAPODS: 1.8.4

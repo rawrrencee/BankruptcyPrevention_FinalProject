@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		212ACAF4237E07EB00A7342C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 212ACAF3237E07EB00A7342C /* GoogleService-Info.plist */; };
 		212ACAF9237E0DF500A7342C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212ACAF5237E0DF400A7342C /* HomeViewController.swift */; };
-		212ACAFA237E0DF500A7342C /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212ACAF6237E0DF500A7342C /* AddTransactionViewController.swift */; };
+		212ACAFA237E0DF500A7342C /* AddExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212ACAF6237E0DF500A7342C /* AddExpenseViewController.swift */; };
 		212ACAFB237E0DF500A7342C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212ACAF7237E0DF500A7342C /* ProfileViewController.swift */; };
 		212ACAFC237E0DF500A7342C /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212ACAF8237E0DF500A7342C /* ReportViewController.swift */; };
 		212ACAFE237E106300A7342C /* FirestoreReferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212ACAFD237E106300A7342C /* FirestoreReferenceManager.swift */; };
@@ -21,13 +21,14 @@
 		212D08E4237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 212D08E2237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodeld */; };
 		212D08E6237E0375002E4FC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 212D08E5237E0375002E4FC4 /* Assets.xcassets */; };
 		212D08E9237E0375002E4FC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 212D08E7237E0375002E4FC4 /* LaunchScreen.storyboard */; };
+		21DDED46237E54D100E4842A /* ExpenseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDED45237E54D100E4842A /* ExpenseTableViewCell.swift */; };
 		74CF494B0CA46FBCE3456644 /* Pods_bankruptcyprevention_finalproject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD74EF3072289F08DE7DDE7B /* Pods_bankruptcyprevention_finalproject.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		212ACAF3237E07EB00A7342C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		212ACAF5237E0DF400A7342C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		212ACAF6237E0DF500A7342C /* AddTransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
+		212ACAF6237E0DF500A7342C /* AddExpenseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddExpenseViewController.swift; sourceTree = "<group>"; };
 		212ACAF7237E0DF500A7342C /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		212ACAF8237E0DF500A7342C /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		212ACAFD237E106300A7342C /* FirestoreReferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreReferenceManager.swift; sourceTree = "<group>"; };
@@ -41,6 +42,7 @@
 		212D08E5237E0375002E4FC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		212D08E8237E0375002E4FC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		212D08EA237E0375002E4FC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21DDED45237E54D100E4842A /* ExpenseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTableViewCell.swift; sourceTree = "<group>"; };
 		AD74EF3072289F08DE7DDE7B /* Pods_bankruptcyprevention_finalproject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bankruptcyprevention_finalproject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0963B62BB2BD0BE13904A1 /* Pods-bankruptcyprevention_finalproject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bankruptcyprevention_finalproject.release.xcconfig"; path = "Target Support Files/Pods-bankruptcyprevention_finalproject/Pods-bankruptcyprevention_finalproject.release.xcconfig"; sourceTree = "<group>"; };
 		F8EFEF9143D65E0506702F46 /* Pods-bankruptcyprevention_finalproject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bankruptcyprevention_finalproject.debug.xcconfig"; path = "Target Support Files/Pods-bankruptcyprevention_finalproject/Pods-bankruptcyprevention_finalproject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,11 +83,12 @@
 			children = (
 				212D08DB237E0375002E4FC4 /* AppDelegate.swift */,
 				212D08DD237E0375002E4FC4 /* LoginViewController.swift */,
-				212ACAF6237E0DF500A7342C /* AddTransactionViewController.swift */,
+				212ACAF6237E0DF500A7342C /* AddExpenseViewController.swift */,
 				212ACAF5237E0DF400A7342C /* HomeViewController.swift */,
 				212ACAF7237E0DF500A7342C /* ProfileViewController.swift */,
 				212ACAF8237E0DF500A7342C /* ReportViewController.swift */,
 				212D08DF237E0375002E4FC4 /* Main.storyboard */,
+				21DDED45237E54D100E4842A /* ExpenseTableViewCell.swift */,
 				212ACB03237E1B3E00A7342C /* TabBarController.swift */,
 				212ACAFF237E111D00A7342C /* RegisterViewController.swift */,
 				212ACAFD237E106300A7342C /* FirestoreReferenceManager.swift */,
@@ -236,9 +239,10 @@
 				212D08DE237E0375002E4FC4 /* LoginViewController.swift in Sources */,
 				212ACB04237E1B3E00A7342C /* TabBarController.swift in Sources */,
 				212D08DC237E0375002E4FC4 /* AppDelegate.swift in Sources */,
-				212ACAFA237E0DF500A7342C /* AddTransactionViewController.swift in Sources */,
+				212ACAFA237E0DF500A7342C /* AddExpenseViewController.swift in Sources */,
 				212D08E4237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodeld in Sources */,
 				212ACAF9237E0DF500A7342C /* HomeViewController.swift in Sources */,
+				21DDED46237E54D100E4842A /* ExpenseTableViewCell.swift in Sources */,
 				212ACAFC237E0DF500A7342C /* ReportViewController.swift in Sources */,
 				212ACAFE237E106300A7342C /* FirestoreReferenceManager.swift in Sources */,
 			);

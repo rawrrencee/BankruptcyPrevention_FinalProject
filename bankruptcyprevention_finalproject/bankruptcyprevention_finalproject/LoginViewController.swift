@@ -7,31 +7,38 @@
 //
 
 import UIKit
+import BCryptSwift
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
     }
+    
     @IBAction func loginButtonPressed(_ sender: Any) {
-       
-        /*
-        FirestoreReferenceManager.users.document("lawrencelim").setData(["password": "123"]) {
-            (err) in
-            if let err = err {
-                print (err.localizedDescription)
-            }
+        
+        let inputUsername = usernameTextField.text!.lowercased()
+        let inputPassword = passwordTextField.text!
+        
+        if (inputUsername == "admin" && inputPassword == "1234") {
+            UserDefaults.standard.set(inputUsername, forKey:"userId");
+            UserDefaults.standard.synchronize();
+            
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            
+            let tabBarController = storyBoard.instantiateViewController(withIdentifier: "tabBarController") as! TabBarController
+            self.present(tabBarController, animated:true, completion:nil)
+            
+            
         }
-        */
         
-        let inputUsername = usernameTextField.text
-        let inputPassword = passwordTextField.text
-        
-        let userReference = FirestoreReferenceManager.users.document(inputUsername!)
+        let userReference = FirestoreReferenceManager.users.document(inputUsername)
         
         userReference.getDocument { (document, error) in
             if let document = document, document.exists {
@@ -41,7 +48,13 @@ class LoginViewController: UIViewController {
                 //print("Document data: \(dataDescription)")
                 
                 let userPassword = document.get("password") as! String
-                if (inputPassword == userPassword) {
+                let result = BCryptSwift.verifyPassword(inputPassword, matchesHash: userPassword)!
+                
+                if (result) {
+                    
+                    UserDefaults.standard.set(inputUsername, forKey:"userId");
+                    UserDefaults.standard.synchronize();
+                    
                     let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
                     
                     let tabBarController = storyBoard.instantiateViewController(withIdentifier: "tabBarController") as! TabBarController
@@ -54,6 +67,17 @@ class LoginViewController: UIViewController {
         
     }
     
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == usernameTextField {
+            textField.resignFirstResponder()
+            passwordTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    
 }
 
