@@ -11,16 +11,19 @@ import CoreData
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var monthExpenditureLabel: UILabel!
     @IBOutlet weak var expenseTableView: UITableView!
     
     var expenses: [NSManagedObject] = []
+    var currentMonthExpenditureAmount: Double = 0.00
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         expenseTableView.delegate = self
         expenseTableView.dataSource = self
-        // Do any additional setup after loading the view.
+        
+        fetchMonthExpenditure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,13 +42,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "Expense")
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
-        print(userId)
         fetchRequest.predicate = NSPredicate(format: "userId == %@", userId)
         
         //3
         do {
             expenses = try managedContext.fetch(fetchRequest)
-            expenseTableView.reloadData()
+            reloadData()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -53,6 +55,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func reloadData() {
         expenseTableView.reloadData()
+        fetchMonthExpenditure()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -60,7 +63,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let expense = expenses[indexPath.row]
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExpenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
@@ -80,6 +83,38 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.dateLabel.text = simpleDate
         
         return cell
+    }
+    
+    func fetchMonthExpenditure() {
+        let userId = UserDefaults.standard.object(forKey: "userId") as! String
+        let currentMonth = Calendar.current.component(.month, from: Date())
+        
+        //1
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        //2
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "MonthExpenditure")
+        
+        fetchRequest.predicate = NSPredicate(format: "userId = %@ AND month = %@", userId, NSNumber(value: currentMonth))
+        
+        //3
+        do {
+            var currentMonthExpenditure = try managedContext.fetch(fetchRequest)
+            if (!currentMonthExpenditure.isEmpty) {
+                currentMonthExpenditureAmount = currentMonthExpenditure[0].value(forKey: "amount")  as! Double
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        self.monthExpenditureLabel.text = "$\(currentMonthExpenditureAmount)"
     }
     
 }

@@ -140,6 +140,19 @@ class AddExpenseViewController: UIViewController {
                 } catch let error as NSError {
                     print("Could not save. \(error), \(error.userInfo)")
                 }
+            } else {
+                
+                var monthAmount = monthExpenditure[0].value(forKeyPath: "amount") as! Double
+                monthAmount += amount
+                monthExpenditure[0].setValue(monthAmount, forKey: "amount")
+                
+                do {
+                    try managedContext.save()
+                    print("Month amount updated.")
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+
             }
             
         } catch let error as NSError {

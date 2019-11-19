@@ -262,6 +262,7 @@
                     <tabBarItem key="tabBarItem" title="Home" image="home" id="Q9a-L4-uHt"/>
                     <connections>
                         <outlet property="expenseTableView" destination="Lgs-F5-uRt" id="Z7N-Zt-hJk"/>
+                        <outlet property="monthExpenditureLabel" destination="kVS-xD-KYa" id="yJW-B6-Phs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccr-vF-oAI" sceneMemberID="firstResponder"/>

@@ -70,7 +70,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.present(tabBarController, animated:true, completion:nil)
                 }
             } else {
-                print("Document does not exist")
+                let alert = UIAlertController(title: "Invalid Account", message: "The username/password entered does not exist.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+                self.present(alert, animated: true)
             }
         }
         
