@@ -55,11 +55,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 //print("Document data: \(dataDescription)")
                 
                 let userPassword = document.get("password") as! String
+                let saveToCloud = document.get("saveToCloud") as! Int
                 let result = BCryptSwift.verifyPassword(inputPassword, matchesHash: userPassword)!
                 
                 if (result) {
                     
                     UserDefaults.standard.set(inputUsername, forKey:"userId");
+                    UserDefaults.standard.set(saveToCloud, forKey:"saveToCloud");
                     UserDefaults.standard.synchronize();
                     
                     let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)

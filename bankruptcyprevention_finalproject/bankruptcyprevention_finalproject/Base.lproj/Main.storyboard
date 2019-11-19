@@ -143,8 +143,22 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fkX-k4-WXk">
+                                <rect key="frame" x="347" y="458" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="saveToCloudSwitchSelected:" destination="vsg-0u-A6f" eventType="valueChanged" id="xaA-qo-Qcm"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Save my data to the cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Luy-GB-rbS">
+                                <rect key="frame" x="20" y="463" width="224" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k4y-Jj-pq7">
-                                <rect key="frame" x="337" y="452" width="57" height="30"/>
+                                <rect key="frame" x="179" y="552" width="57" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Register"/>
                                 <connections>
@@ -157,6 +171,7 @@
                     </view>
                     <connections>
                         <outlet property="passwordTextField" destination="paI-VJ-Nkx" id="Byq-Qs-tFN"/>
+                        <outlet property="saveToCloudSwitch" destination="fkX-k4-WXk" id="M3H-1V-A3P"/>
                         <outlet property="usernameTextField" destination="Zkz-NZ-eyN" id="1SS-YU-L3W"/>
                     </connections>
                 </viewController>
@@ -463,6 +478,9 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AWb-Iy-uBf">
                                 <rect key="frame" x="347" y="355" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="saveToCloudSwitchSelected:" destination="vsg-0u-A6f" eventType="valueChanged" id="5aI-ZS-xir"/>
+                                </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Save my data to the cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3G-FA-9Y1">
                                 <rect key="frame" x="20" y="360" width="224" height="24"/>
@@ -476,6 +494,9 @@
                         <viewLayoutGuide key="safeArea" id="2mj-mg-MQj"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile" id="KwJ-Cg-5eD"/>
+                    <connections>
+                        <outlet property="saveToCloudSwitch" destination="AWb-Iy-uBf" id="1uQ-Mk-De8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V4Y-9F-6sO" sceneMemberID="firstResponder"/>
             </objects>

@@ -12,6 +12,7 @@ import BCryptSwift
 class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var saveToCloudSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,13 +50,25 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                 let salt = BCryptSwift.generateSalt()
                 
                 let passwordHash = BCryptSwift.hashPassword(inputPassword, withSalt: salt)
-                FirestoreReferenceManager.users.document(inputUsername).setData(["password": passwordHash!]) {
-                    (err) in
-                    if let err = err {
-                        print (err.localizedDescription)
+                
+                if (self.saveToCloudSwitch.isOn) {
+                    
+                    FirestoreReferenceManager.users.document(inputUsername).setData(["password": passwordHash!, "saveToCloud": 1]) {
+                        (err) in
+                        if let err = err {
+                            print (err.localizedDescription)
+                        }
                     }
-                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    FirestoreReferenceManager.users.document(inputUsername).setData(["password": passwordHash!, "saveToCloud": 0]) {
+                        (err) in
+                        if let err = err {
+                            print (err.localizedDescription)
+                        }
+                    }
                 }
+                
+                self.dismiss(animated: true, completion: nil)
             }
         }
         

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2121204C23848A520097AC05 /* bankruptcyprevention_finalproject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2121204A23848A510097AC05 /* bankruptcyprevention_finalproject.xcdatamodeld */; };
 		212ACAF4237E07EB00A7342C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 212ACAF3237E07EB00A7342C /* GoogleService-Info.plist */; };
 		212ACAF9237E0DF500A7342C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212ACAF5237E0DF400A7342C /* HomeViewController.swift */; };
 		212ACAFA237E0DF500A7342C /* AddExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212ACAF6237E0DF500A7342C /* AddExpenseViewController.swift */; };
@@ -18,7 +19,6 @@
 		212D08DC237E0375002E4FC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212D08DB237E0375002E4FC4 /* AppDelegate.swift */; };
 		212D08DE237E0375002E4FC4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212D08DD237E0375002E4FC4 /* LoginViewController.swift */; };
 		212D08E1237E0375002E4FC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 212D08DF237E0375002E4FC4 /* Main.storyboard */; };
-		212D08E4237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 212D08E2237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodeld */; };
 		212D08E6237E0375002E4FC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 212D08E5237E0375002E4FC4 /* Assets.xcassets */; };
 		212D08E9237E0375002E4FC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 212D08E7237E0375002E4FC4 /* LaunchScreen.storyboard */; };
 		21DDED46237E54D100E4842A /* ExpenseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDED45237E54D100E4842A /* ExpenseTableViewCell.swift */; };
@@ -26,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2121204B23848A510097AC05 /* bankruptcyprevention_finalproject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = bankruptcyprevention_finalproject.xcdatamodel; sourceTree = "<group>"; };
 		212ACAF3237E07EB00A7342C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		212ACAF5237E0DF400A7342C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		212ACAF6237E0DF500A7342C /* AddExpenseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddExpenseViewController.swift; sourceTree = "<group>"; };
@@ -38,7 +39,6 @@
 		212D08DB237E0375002E4FC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		212D08DD237E0375002E4FC4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		212D08E0237E0375002E4FC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		212D08E3237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = bankruptcyprevention_finalproject.xcdatamodel; sourceTree = "<group>"; };
 		212D08E5237E0375002E4FC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		212D08E8237E0375002E4FC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		212D08EA237E0375002E4FC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 				212D08E7237E0375002E4FC4 /* LaunchScreen.storyboard */,
 				212D08EA237E0375002E4FC4 /* Info.plist */,
 				212ACAF3237E07EB00A7342C /* GoogleService-Info.plist */,
-				212D08E2237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodeld */,
+				2121204A23848A510097AC05 /* bankruptcyprevention_finalproject.xcdatamodeld */,
 			);
 			path = bankruptcyprevention_finalproject;
 			sourceTree = "<group>";
@@ -236,11 +236,11 @@
 			files = (
 				212ACB00237E111D00A7342C /* RegisterViewController.swift in Sources */,
 				212ACAFB237E0DF500A7342C /* ProfileViewController.swift in Sources */,
+				2121204C23848A520097AC05 /* bankruptcyprevention_finalproject.xcdatamodeld in Sources */,
 				212D08DE237E0375002E4FC4 /* LoginViewController.swift in Sources */,
 				212ACB04237E1B3E00A7342C /* TabBarController.swift in Sources */,
 				212D08DC237E0375002E4FC4 /* AppDelegate.swift in Sources */,
 				212ACAFA237E0DF500A7342C /* AddExpenseViewController.swift in Sources */,
-				212D08E4237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodeld in Sources */,
 				212ACAF9237E0DF500A7342C /* HomeViewController.swift in Sources */,
 				21DDED46237E54D100E4842A /* ExpenseTableViewCell.swift in Sources */,
 				212ACAFC237E0DF500A7342C /* ReportViewController.swift in Sources */,
@@ -448,12 +448,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		212D08E2237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodeld */ = {
+		2121204A23848A510097AC05 /* bankruptcyprevention_finalproject.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				212D08E3237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodel */,
+				2121204B23848A510097AC05 /* bankruptcyprevention_finalproject.xcdatamodel */,
 			);
-			currentVersion = 212D08E3237E0375002E4FC4 /* bankruptcyprevention_finalproject.xcdatamodel */;
+			currentVersion = 2121204B23848A510097AC05 /* bankruptcyprevention_finalproject.xcdatamodel */;
 			path = bankruptcyprevention_finalproject.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -68,13 +68,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         let amount = expense.value(forKeyPath: "amount") as! Double
-        cell.amountLabel.text = "\(amount.truncate(places: 1))"
+        cell.amountLabel.text = "$\(amount.truncate(places: 1))"
         
         let description = expense.value(forKeyPath: "expenseDescription") as! String
         cell.descriptionLabel.text = description
         
         let date = expense.value(forKeyPath: "date") as! Date
-        cell.dateLabel.text = date.description
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE, MMM d yyyy"
+        let simpleDate = dateFormatter.string(from: date)
+        cell.dateLabel.text = simpleDate
         
         return cell
     }

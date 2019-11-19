@@ -29,6 +29,8 @@ class AddExpenseViewController: UIViewController {
         }
         let inputDescription = descriptionTextField.text!
         let inputDate = datePicker.date
+        let year = Calendar.current.component(.year, from: inputDate)
+        let month = Calendar.current.component(.month, from: inputDate)
         
         if (inputAmount.isNaN) {
             let alert = UIAlertController(title: "Not a number", message: "Please enter a number for the amount.", preferredStyle: .alert)
@@ -48,12 +50,13 @@ class AddExpenseViewController: UIViewController {
         
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
 
-        save(amount: inputAmount, expenseDescription: inputDescription, userId: userId, date: inputDate)
+        saveExpense(amount: inputAmount, expenseDescription: inputDescription, userId: userId, date: inputDate, month: month, year: year)
+        updateMonthExpenditure(userId: userId, month: month, year: year, amount: inputAmount)
         dismiss(animated: true, completion: nil)
         
     }
     
-    func save(amount: Double, expenseDescription: String, userId: String, date: Date) {
+    func saveExpense(amount: Double, expenseDescription: String, userId: String, date: Date, month: Int, year: Int) {
         
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
@@ -77,12 +80,71 @@ class AddExpenseViewController: UIViewController {
         expense.setValue(expenseDescription, forKeyPath: "expenseDescription")
         expense.setValue(userId, forKeyPath: "userId")
         expense.setValue(date, forKeyPath: "date")
+        expense.setValue(month, forKeyPath: "month")
+        expense.setValue(year, forKeyPath: "year")
         
         // 4
         do {
             try managedContext.save()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func updateMonthExpenditure(userId: String, month: Int, year: Int, amount: Double) {
+        
+        var monthExpenditure: [NSManagedObject] = []
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        //2
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "MonthExpenditure")
+        let userId = UserDefaults.standard.object(forKey: "userId") as! String
+        
+        let userIdPredicate = NSPredicate(format: "userId == %@", userId)
+        let monthPredicate = NSPredicate(format: "month == %@", NSNumber(value: month))
+        //fetchRequest.predicate = NSPredicate(format: "level = %ld AND section = %ld", level, section)
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, monthPredicate])
+        fetchRequest.predicate = andPredicate
+        
+        //3
+        do {
+            monthExpenditure = try managedContext.fetch(fetchRequest)
+            
+            if (monthExpenditure.isEmpty) {
+                // 2
+                let entity =
+                    NSEntityDescription.entity(forEntityName: "MonthExpenditure",
+                                               in: managedContext)!
+                
+                let monthExpenditure = NSManagedObject(entity: entity,
+                                                       insertInto: managedContext)
+                
+                // 3
+                monthExpenditure.setValue(amount, forKeyPath: "amount")
+                monthExpenditure.setValue(userId, forKeyPath: "userId")
+                monthExpenditure.setValue(month, forKeyPath: "month")
+                monthExpenditure.setValue(year, forKeyPath: "year")
+                
+                // 4
+                do {
+                    try managedContext.save()
+                    print("New month saved.")
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            }
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+            
         }
     }
     
