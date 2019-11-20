@@ -11,5 +11,6 @@ pod 'BCryptSwift'
 pod 'IQKeyboardManagerSwift'
 pod 'Firebase/Core'
 pod 'Firebase/Firestore'
+pod 'Charts'
 
 end

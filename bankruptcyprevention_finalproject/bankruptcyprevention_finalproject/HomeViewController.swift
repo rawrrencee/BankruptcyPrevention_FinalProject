@@ -43,6 +43,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             NSFetchRequest<NSManagedObject>(entityName: "Expense")
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
         fetchRequest.predicate = NSPredicate(format: "userId == %@", userId)
+        let sort = NSSortDescriptor(key: #keyPath(Expense.date), ascending: true)
+        fetchRequest.sortDescriptors = [sort]
         
         //3
         do {
@@ -71,7 +73,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         let amount = expense.value(forKeyPath: "amount") as! Double
-        cell.amountLabel.text = "$\(amount.truncate(places: 1))"
+        if (amount < 0) {
+            let absolute = amount * -1
+            cell.amountLabel.text = "-$\(absolute.truncate(places: 2))"
+        } else {
+            cell.amountLabel.text = "$\(amount.truncate(places: 2))"
+        }
         
         let description = expense.value(forKeyPath: "expenseDescription") as! String
         cell.descriptionLabel.text = description
@@ -83,6 +90,36 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.dateLabel.text = simpleDate
         
         return cell
+    }
+    
+    // Override to support editing the table view.
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let appDelegate =
+                UIApplication.shared.delegate as? AppDelegate else {
+                    return
+            }
+            let managedContext =
+                appDelegate.persistentContainer.viewContext
+            let inverse: Double = expenses[indexPath.row].value(forKey: "amount") as! Double * -1.0
+            print (inverse)
+            let month = expenses[indexPath.row].value(forKey: "month") as! Int
+            let year = expenses[indexPath.row].value(forKey: "year") as! Int
+            managedContext.delete(expenses[indexPath.row])
+            
+            expenses.remove(at: indexPath.row)
+            do {
+                try managedContext.save()
+                updateMonthExpenditure(month: month, year: year, amount: inverse)
+                fetchMonthExpenditure()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
     }
     
     func fetchMonthExpenditure() {
@@ -114,7 +151,77 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         
-        self.monthExpenditureLabel.text = "$\(currentMonthExpenditureAmount)"
+        self.monthExpenditureLabel.text = "$\(currentMonthExpenditureAmount.truncate(places: 2))"
+    }
+    
+    func updateMonthExpenditure(month: Int, year: Int, amount: Double) {
+        
+        var monthExpenditure: [NSManagedObject] = []
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        //2
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "MonthExpenditure")
+        let userId = UserDefaults.standard.object(forKey: "userId") as! String
+        
+        let userIdPredicate = NSPredicate(format: "userId == %@", userId)
+        let monthPredicate = NSPredicate(format: "month == %@", NSNumber(value: month))
+        //fetchRequest.predicate = NSPredicate(format: "level = %ld AND section = %ld", level, section)
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, monthPredicate])
+        fetchRequest.predicate = andPredicate
+        
+        //3
+        do {
+            monthExpenditure = try managedContext.fetch(fetchRequest)
+            
+            if (monthExpenditure.isEmpty) {
+                // 2
+                let entity =
+                    NSEntityDescription.entity(forEntityName: "MonthExpenditure",
+                                               in: managedContext)!
+                
+                let monthExpenditure = NSManagedObject(entity: entity,
+                                                       insertInto: managedContext)
+                
+                // 3
+                monthExpenditure.setValue(amount, forKeyPath: "amount")
+                monthExpenditure.setValue(userId, forKeyPath: "userId")
+                monthExpenditure.setValue(month, forKeyPath: "month")
+                monthExpenditure.setValue(year, forKeyPath: "year")
+                
+                // 4
+                do {
+                    try managedContext.save()
+                    print("New month saved.")
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            } else {
+                
+                var monthAmount = monthExpenditure[0].value(forKeyPath: "amount") as! Double
+                monthAmount += amount
+                monthExpenditure[0].setValue(monthAmount, forKey: "amount")
+                
+                do {
+                    try managedContext.save()
+                    print("Month amount updated.")
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+                
+            }
+            
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+            
+        }
     }
     
 }

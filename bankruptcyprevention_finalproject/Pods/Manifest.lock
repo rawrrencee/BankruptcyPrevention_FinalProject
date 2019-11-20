@@ -6,6 +6,9 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.3):
     - BoringSSL-GRPC/Interface (= 0.0.3)
   - BoringSSL-GRPC/Interface (0.0.3)
+  - Charts (3.4.0):
+    - Charts/Core (= 3.4.0)
+  - Charts/Core (3.4.0)
   - Firebase/Core (6.12.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.1.5)
@@ -110,6 +113,7 @@ PODS:
 
 DEPENDENCIES:
   - BCryptSwift
+  - Charts
   - Firebase/Core
   - Firebase/Firestore
   - IQKeyboardManagerSwift
@@ -118,6 +122,7 @@ SPEC REPOS:
   trunk:
     - BCryptSwift
     - BoringSSL-GRPC
+    - Charts
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuthInterop
@@ -140,6 +145,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   BCryptSwift: f69992ea5685f6714260842c2770688043b89ab2
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
+  Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   Firebase: da031bc7012374e3bed17a6731b89327b29863b9
   FirebaseAnalytics: 4e53a7eb7b76bc703c4d9239bc964545e9b23361
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
@@ -159,6 +165,6 @@ SPEC CHECKSUMS:
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
 
-PODFILE CHECKSUM: 58cc517f402aef7772cdc42299df881270724c9f
+PODFILE CHECKSUM: 9ac8e7870d369f57adaadc2cfaa2ece902355370
 
 COCOAPODS: 1.8.4

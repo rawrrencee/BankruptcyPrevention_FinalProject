@@ -15,6 +15,9 @@ class AddExpenseViewController: UIViewController {
     @IBOutlet weak var descriptionTextField: UITextField!
     @IBOutlet weak var datePicker: UIDatePicker!
     
+    var allMonthExpenditures: [NSManagedObject] = []
+    var yearExpenditureAmount: Double = 0.00
+    
     @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -52,6 +55,7 @@ class AddExpenseViewController: UIViewController {
 
         saveExpense(amount: inputAmount, expenseDescription: inputDescription, userId: userId, date: inputDate, month: month, year: year)
         updateMonthExpenditure(userId: userId, month: month, year: year, amount: inputAmount)
+        updateYearExpenditure(userId: userId, year: year)
         dismiss(animated: true, completion: nil)
         
     }
@@ -158,6 +162,110 @@ class AddExpenseViewController: UIViewController {
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
             
+        }
+    }
+    
+    func fetchAllMonthExpenditures() {
+        let userId = UserDefaults.standard.object(forKey: "userId") as! String
+        
+        //1
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        //2
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "MonthExpenditure")
+        
+        fetchRequest.predicate = NSPredicate(format: "userId = %@", userId)
+        
+        let sort = NSSortDescriptor(key: #keyPath(MonthExpenditure.month), ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        
+        //3
+        do {
+            allMonthExpenditures = try managedContext.fetch(fetchRequest)
+            calculateTotalYearExpenditure()
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func calculateTotalYearExpenditure() {
+        
+        yearExpenditureAmount = 0.00
+        
+        if (!allMonthExpenditures.isEmpty) {
+            for month in allMonthExpenditures {
+                yearExpenditureAmount += month.value(forKey: "amount") as! Double
+            }
+        }
+    }
+    
+    func updateYearExpenditure(userId: String, year: Int) {
+        
+        fetchAllMonthExpenditures()
+        calculateTotalYearExpenditure()
+        
+        let userId = UserDefaults.standard.object(forKey: "userId") as! String
+        
+        //1
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        //2
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "YearExpenditure")
+        
+        fetchRequest.predicate = NSPredicate(format: "userId = %@ AND year = %@", userId, NSNumber(value: year))
+        
+        //3
+        do {
+            
+            let yearExpenditure = try managedContext.fetch(fetchRequest)
+            
+            if (yearExpenditure.isEmpty) {
+                let entity =
+                    NSEntityDescription.entity(forEntityName: "YearExpenditure",
+                                               in: managedContext)!
+                
+                let yearExpenditure = NSManagedObject(entity: entity,
+                                                      insertInto: managedContext)
+                
+                // 3
+                yearExpenditure.setValue(yearExpenditureAmount, forKeyPath: "amount")
+                yearExpenditure.setValue(userId, forKeyPath: "userId")
+                yearExpenditure.setValue(year, forKeyPath: "year")
+                
+                // 4
+                do {
+                    try managedContext.save()
+                    print("New year saved.")
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            } else {
+                yearExpenditure[0].setValue(yearExpenditureAmount, forKey: "amount")
+                
+                do {
+                    try managedContext.save()
+                    print("Year amount updated.")
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+            }
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
