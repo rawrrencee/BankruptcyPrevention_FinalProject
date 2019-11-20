@@ -72,6 +72,7 @@ class EditExpenseViewController: UIViewController {
         
         updateExpense(amount: inputAmount, expenseDescription: inputDescription, userId: userId, originalDate: originalDate, modifiedDate: inputDate, month: month, year: year)
         updateMonthExpenditure(userId: userId, originalMonth: originalMonth, modifiedMonth: month, originalYear: originalYear, modifiedYear: year, amountToDeduct: expenses[selectedIndex].value(forKey: "amount") as! Double, amountToAdd: inputAmount)
+        updateYearExpenditure(userId: userId, year: originalYear)
         updateYearExpenditure(userId: userId, year: year)
         dismiss(animated: true, completion: nil)
     }
@@ -154,6 +155,8 @@ class EditExpenseViewController: UIViewController {
             var monthAmount = monthExpenditure[0].value(forKeyPath: "amount") as! Double
             monthAmount = monthAmount - amountToDeduct
             monthExpenditure[0].setValue(monthAmount, forKey: "amount")
+            monthExpenditure[0].setValue(modifiedMonth, forKeyPath: "month")
+            monthExpenditure[0].setValue(modifiedYear, forKeyPath: "year")
             
             do {
                 try managedContext.save()
@@ -210,39 +213,11 @@ class EditExpenseViewController: UIViewController {
         }
     }
     
-    func fetchAllMonthExpenditures() {
-        let userId = UserDefaults.standard.object(forKey: "userId") as! String
-        
-        //1
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
-        
-        //2
-        let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "MonthExpenditure")
-        
-        fetchRequest.predicate = NSPredicate(format: "userId = %@", userId)
-        
-        let sort = NSSortDescriptor(key: #keyPath(MonthExpenditure.month), ascending: true)
-        fetchRequest.sortDescriptors = [sort]
-        
-        //3
-        do {
-            allMonthExpenditures = try managedContext.fetch(fetchRequest)
-            calculateTotalYearExpenditure()
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-    }
+    
     
     func updateYearExpenditure(userId: String, year: Int) {
         
-        fetchAllMonthExpenditures()
+        fetchAllMonthExpenditures(year: year)
         calculateTotalYearExpenditure()
         
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
@@ -298,6 +273,37 @@ class EditExpenseViewController: UIViewController {
                 }
             }
             
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func fetchAllMonthExpenditures(year: Int) {
+        let userId = UserDefaults.standard.object(forKey: "userId") as! String
+        
+        //1
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        //2
+        let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "MonthExpenditure")
+        
+        fetchRequest.predicate = NSPredicate(format: "userId = %@ AND year = %@", userId, NSNumber(value: year))
+        
+        
+        let sort = NSSortDescriptor(key: #keyPath(MonthExpenditure.month), ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        
+        //3
+        do {
+            allMonthExpenditures = try managedContext.fetch(fetchRequest)
+            calculateTotalYearExpenditure()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }

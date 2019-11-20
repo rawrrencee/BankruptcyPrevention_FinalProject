@@ -23,7 +23,7 @@ class ReportViewController: UIViewController, ChartViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchAllMonthExpenditures()
+        fetchAllMonthExpenditures(year: Calendar.current.component(.year, from: Date()))
         calculateTotalYearExpenditure()
         
         if (yearExpenditureAmount < 0) {
@@ -39,7 +39,7 @@ class ReportViewController: UIViewController, ChartViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchAllMonthExpenditures()
+        fetchAllMonthExpenditures(year: Calendar.current.component(.year, from: Date()))
         calculateTotalYearExpenditure()
         yearExpenditureAmountLabel.text = "\(yearExpenditureAmount.truncate(places: 2))"
         barChartView.notifyDataSetChanged()
@@ -76,7 +76,7 @@ class ReportViewController: UIViewController, ChartViewDelegate {
         barChartView.pinchZoomEnabled = true
     }
     
-    func fetchAllMonthExpenditures() {
+    func fetchAllMonthExpenditures(year: Int) {
         
         monthlyExpenditureAmounts.removeAll()
         
@@ -95,7 +95,11 @@ class ReportViewController: UIViewController, ChartViewDelegate {
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "MonthExpenditure")
         
-        fetchRequest.predicate = NSPredicate(format: "userId = %@", userId)
+        let userIdPredicate = NSPredicate(format: "userId == %@", userId)
+        let yearPredicate = NSPredicate(format: "year == %@", NSNumber(value: year))
+        //fetchRequest.predicate = NSPredicate(format: "level = %ld AND section = %ld", level, section)
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, yearPredicate])
+        fetchRequest.predicate = andPredicate
         
         let sort = NSSortDescriptor(key: #keyPath(MonthExpenditure.month), ascending: true)
         fetchRequest.sortDescriptors = [sort]

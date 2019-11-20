@@ -123,8 +123,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func fetchMonthExpenditure() {
+        currentMonthExpenditureAmount = 0.00
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
         let currentMonth = Calendar.current.component(.month, from: Date())
+        let currentYear = Calendar.current.component(.year, from: Date())
         
         //1
         guard let appDelegate =
@@ -139,7 +141,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "MonthExpenditure")
         
-        fetchRequest.predicate = NSPredicate(format: "userId = %@ AND month = %@", userId, NSNumber(value: currentMonth))
+        fetchRequest.predicate = NSPredicate(format: "userId = %@ AND month = %@ AND year = %@", userId, NSNumber(value: currentMonth), NSNumber(value: currentYear))
         
         //3
         do {
@@ -173,8 +175,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let userIdPredicate = NSPredicate(format: "userId == %@", userId)
         let monthPredicate = NSPredicate(format: "month == %@", NSNumber(value: month))
+        let yearPredicate = NSPredicate(format: "year == %@", NSNumber(value: year))
         //fetchRequest.predicate = NSPredicate(format: "level = %ld AND section = %ld", level, section)
-        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, monthPredicate])
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, monthPredicate, yearPredicate])
         fetchRequest.predicate = andPredicate
         
         //3
