@@ -224,6 +224,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let editExpenseViewController = segue.destination as? EditExpenseViewController,
+            let index = expenseTableView.indexPathForSelectedRow?.row
+            else {
+                return
+        }
+        editExpenseViewController.expenses = expenses
+        editExpenseViewController.selectedIndex = index
+    }
+    
 }
 
 extension Double
