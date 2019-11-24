@@ -8,22 +8,29 @@
 
 import UIKit
 import BCryptSwift
+import MaterialComponents
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var usernameTextField: MDCTextField!
+    @IBOutlet weak var passwordTextField: MDCTextField!
+    
+    var usernameController: MDCTextInputControllerOutlined?
+    var passwordController: MDCTextInputControllerOutlined?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         usernameTextField.delegate = self
         passwordTextField.delegate = self
+        
+        usernameController = MDCTextInputControllerOutlined(textInput: usernameTextField)
+        passwordController = MDCTextInputControllerOutlined(textInput: passwordTextField)
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
         
-        let inputUsername = usernameTextField.text!.lowercased()
+        let inputUsername = usernameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         let inputPassword = passwordTextField.text!
         
         if (inputUsername.isEmpty || inputPassword.isEmpty) {

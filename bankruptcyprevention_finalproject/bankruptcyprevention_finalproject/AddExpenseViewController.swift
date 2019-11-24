@@ -8,15 +8,26 @@
 
 import UIKit
 import CoreData
+import MaterialComponents
 
 class AddExpenseViewController: UIViewController {
     
-    @IBOutlet weak var amountTextField: UITextField!
-    @IBOutlet weak var descriptionTextField: UITextField!
+    @IBOutlet weak var amountTextField: MDCTextField!
+    @IBOutlet weak var descriptionTextField: MDCTextField!
     @IBOutlet weak var datePicker: UIDatePicker!
+    
+    var amountController: MDCTextInputControllerOutlined?
+    var descriptionController: MDCTextInputControllerOutlined?
     
     var allMonthExpenditures: [NSManagedObject] = []
     var yearExpenditureAmount: Double = 0.00
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        amountController = MDCTextInputControllerOutlined(textInput: amountTextField)
+        descriptionController = MDCTextInputControllerOutlined(textInput: descriptionTextField)
+    }
     
     @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -30,7 +41,7 @@ class AddExpenseViewController: UIViewController {
             
             return
         }
-        let inputDescription = descriptionTextField.text!
+        let inputDescription = descriptionTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let inputDate = datePicker.date
         let year = Calendar.current.component(.year, from: inputDate)
         let month = Calendar.current.component(.month, from: inputDate)
@@ -114,8 +125,9 @@ class AddExpenseViewController: UIViewController {
         
         let userIdPredicate = NSPredicate(format: "userId == %@", userId)
         let monthPredicate = NSPredicate(format: "month == %@", NSNumber(value: month))
+        let yearPredicate = NSPredicate(format: "year == %@", NSNumber(value: year))
         //fetchRequest.predicate = NSPredicate(format: "level = %ld AND section = %ld", level, section)
-        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, monthPredicate])
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, monthPredicate, yearPredicate])
         fetchRequest.predicate = andPredicate
         
         //3
@@ -165,7 +177,7 @@ class AddExpenseViewController: UIViewController {
         }
     }
     
-    func fetchAllMonthExpenditures() {
+    func fetchAllMonthExpenditures(year: Int) {
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
         
         //1
@@ -181,7 +193,7 @@ class AddExpenseViewController: UIViewController {
         let fetchRequest =
             NSFetchRequest<NSManagedObject>(entityName: "MonthExpenditure")
         
-        fetchRequest.predicate = NSPredicate(format: "userId = %@", userId)
+        fetchRequest.predicate = NSPredicate(format: "userId = %@ AND year = %@", userId, NSNumber(value: year))
         
         let sort = NSSortDescriptor(key: #keyPath(MonthExpenditure.month), ascending: true)
         fetchRequest.sortDescriptors = [sort]
@@ -208,7 +220,7 @@ class AddExpenseViewController: UIViewController {
     
     func updateYearExpenditure(userId: String, year: Int) {
         
-        fetchAllMonthExpenditures()
+        fetchAllMonthExpenditures(year: year)
         calculateTotalYearExpenditure()
         
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
@@ -269,9 +281,6 @@ class AddExpenseViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
-    }
 
 }

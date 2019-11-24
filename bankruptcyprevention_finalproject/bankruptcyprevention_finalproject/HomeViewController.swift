@@ -180,7 +180,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, monthPredicate, yearPredicate])
         fetchRequest.predicate = andPredicate
         
-        //3
         do {
             monthExpenditure = try managedContext.fetch(fetchRequest)
             

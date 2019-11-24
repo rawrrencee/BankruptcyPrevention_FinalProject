@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import MaterialComponents
 
 class EditExpenseViewController: UIViewController {
     
@@ -17,9 +18,12 @@ class EditExpenseViewController: UIViewController {
     var allMonthExpenditures: [NSManagedObject] = []
     var yearExpenditureAmount: Double = 0.00
     
-    @IBOutlet weak var editAmountTextField: UITextField!
-    @IBOutlet weak var editDescriptionTextField: UITextField!
+    @IBOutlet weak var editAmountTextField: MDCTextField!
+    @IBOutlet weak var editDescriptionTextField: MDCTextField!
     @IBOutlet weak var editDatePicker: UIDatePicker!
+    
+    var editAmountController: MDCTextInputControllerOutlined?
+    var editDescriptionController: MDCTextInputControllerOutlined?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +32,9 @@ class EditExpenseViewController: UIViewController {
         editAmountTextField.text = "\(amount.truncate(places: 2))"
         editDescriptionTextField.text = expenses[selectedIndex].value(forKey: "expenseDescription") as? String
         editDatePicker.date = expenses[selectedIndex].value(forKey: "date") as! Date
+        
+        editAmountController = MDCTextInputControllerOutlined(textInput: editAmountTextField)
+        editDescriptionController = MDCTextInputControllerOutlined(textInput: editDescriptionTextField)
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
@@ -70,8 +77,10 @@ class EditExpenseViewController: UIViewController {
         
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
         
+        let originalAmount = expenses[selectedIndex].value(forKey: "amount") as! Double
+        
         updateExpense(amount: inputAmount, expenseDescription: inputDescription, userId: userId, originalDate: originalDate, modifiedDate: inputDate, month: month, year: year)
-        updateMonthExpenditure(userId: userId, originalMonth: originalMonth, modifiedMonth: month, originalYear: originalYear, modifiedYear: year, amountToDeduct: expenses[selectedIndex].value(forKey: "amount") as! Double, amountToAdd: inputAmount)
+        updateMonthExpenditure(originalMonth: originalMonth, modifiedMonth: month, originalYear: originalYear, modifiedYear: year, amountToDeduct: originalAmount, amountToAdd: inputAmount)
         updateYearExpenditure(userId: userId, year: originalYear)
         updateYearExpenditure(userId: userId, year: year)
         dismiss(animated: true, completion: nil)
@@ -124,7 +133,7 @@ class EditExpenseViewController: UIViewController {
         }
     }
     
-    func updateMonthExpenditure(userId: String, originalMonth: Int, modifiedMonth: Int, originalYear: Int, modifiedYear: Int, amountToDeduct: Double, amountToAdd: Double) {
+    func updateMonthExpenditure(originalMonth: Int, modifiedMonth: Int, originalYear: Int, modifiedYear: Int, amountToDeduct: Double, amountToAdd: Double) {
         
         var monthExpenditure: [NSManagedObject] = []
         
@@ -155,16 +164,16 @@ class EditExpenseViewController: UIViewController {
             var monthAmount = monthExpenditure[0].value(forKeyPath: "amount") as! Double
             monthAmount = monthAmount - amountToDeduct
             monthExpenditure[0].setValue(monthAmount, forKey: "amount")
-            monthExpenditure[0].setValue(modifiedMonth, forKeyPath: "month")
-            monthExpenditure[0].setValue(modifiedYear, forKeyPath: "year")
+            monthExpenditure[0].setValue(originalMonth, forKeyPath: "month")
+            monthExpenditure[0].setValue(originalYear, forKeyPath: "year")
             
             do {
                 try managedContext.save()
-                print("Month amount updated.")
+                print("Month amount for \(originalMonth)/\(originalYear) updated to $\(monthAmount).")
                 
                 monthPredicate = NSPredicate(format: "month == %@", NSNumber(value: modifiedMonth))
                 yearPredicate = NSPredicate(format: "year == %@", NSNumber(value: modifiedYear))
-                andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, monthPredicate])
+                andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [userIdPredicate, monthPredicate, yearPredicate])
                 fetchRequest.predicate = andPredicate
                 
                 try monthExpenditure = managedContext.fetch(fetchRequest)
@@ -187,7 +196,7 @@ class EditExpenseViewController: UIViewController {
                     // 4
                     do {
                         try managedContext.save()
-                        print("New month saved.")
+                        print("New month for \(modifiedMonth)/\(modifiedYear) saved with $\(amountToAdd).")
                     } catch let error as NSError {
                         print("Could not save. \(error), \(error.userInfo)")
                     }
@@ -197,7 +206,7 @@ class EditExpenseViewController: UIViewController {
                     monthExpenditure[0].setValue(monthAmount, forKey: "amount")
                     do {
                         try managedContext.save()
-                        print("Month amount updated.")
+                        print("Month amount updated to $\(monthAmount).")
                     } catch let error as NSError {
                         print("Could not save. \(error), \(error.userInfo)")
                     }

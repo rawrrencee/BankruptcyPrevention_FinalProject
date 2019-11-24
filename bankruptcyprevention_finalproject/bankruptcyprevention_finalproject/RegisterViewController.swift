@@ -8,17 +8,24 @@
 
 import UIKit
 import BCryptSwift
+import MaterialComponents
 
 class RegisterViewController: UIViewController, UITextFieldDelegate {
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var usernameTextField: MDCTextField!
+    @IBOutlet weak var passwordTextField: MDCTextField!
     @IBOutlet weak var saveToCloudSwitch: UISwitch!
+    
+    var usernameController: MDCTextInputControllerOutlined?
+    var passwordController: MDCTextInputControllerOutlined?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         usernameTextField.delegate = self
         passwordTextField.delegate = self
+        
+        usernameController = MDCTextInputControllerOutlined(textInput: usernameTextField)
+        passwordController = MDCTextInputControllerOutlined(textInput: passwordTextField)
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
@@ -27,7 +34,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func registerButtonPressed(_ sender: Any) {
         
-        let inputUsername = usernameTextField.text!.lowercased()
+        let inputUsername = usernameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         let inputPassword = passwordTextField.text!
         
         if (inputUsername.isEmpty || inputPassword.isEmpty) {

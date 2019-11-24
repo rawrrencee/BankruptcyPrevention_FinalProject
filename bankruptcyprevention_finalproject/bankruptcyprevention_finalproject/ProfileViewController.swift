@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+
 
 class ProfileViewController: UIViewController {
     
@@ -23,6 +25,8 @@ class ProfileViewController: UIViewController {
                     print (err.localizedDescription)
                 }
             }
+            
+            
         } else {
             FirestoreReferenceManager.users.document(userId).updateData(["saveToCloud": 0]) {
                 (err) in

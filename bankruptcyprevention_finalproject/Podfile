@@ -12,5 +12,6 @@ pod 'IQKeyboardManagerSwift'
 pod 'Firebase/Core'
 pod 'Firebase/Firestore'
 pod 'Charts'
+pod 'MaterialComponents'
 
 end
