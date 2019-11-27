@@ -27,6 +27,9 @@ class AddExpenseViewController: UIViewController {
         
         amountController = MDCTextInputControllerOutlined(textInput: amountTextField)
         descriptionController = MDCTextInputControllerOutlined(textInput: descriptionTextField)
+        
+        amountController?.borderFillColor = UIColor.white
+        descriptionController?.borderFillColor = UIColor.white
     }
     
     @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {

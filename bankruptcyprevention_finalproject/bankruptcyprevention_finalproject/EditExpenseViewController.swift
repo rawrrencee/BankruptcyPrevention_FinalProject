@@ -35,6 +35,9 @@ class EditExpenseViewController: UIViewController {
         
         editAmountController = MDCTextInputControllerOutlined(textInput: editAmountTextField)
         editDescriptionController = MDCTextInputControllerOutlined(textInput: editDescriptionTextField)
+        
+        editAmountController?.borderFillColor = UIColor.white
+        editDescriptionController?.borderFillColor = UIColor.white
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {

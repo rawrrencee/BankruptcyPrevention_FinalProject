@@ -26,6 +26,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         usernameController = MDCTextInputControllerOutlined(textInput: usernameTextField)
         passwordController = MDCTextInputControllerOutlined(textInput: passwordTextField)
+        
+        usernameController?.borderFillColor = UIColor.white
+        passwordController?.borderFillColor = UIColor.white
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
