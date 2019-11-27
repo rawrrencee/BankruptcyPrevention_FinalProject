@@ -107,10 +107,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="main_bg" translatesAutoresizingMaskIntoConstraints="NO" id="zd0-Fu-MB3">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7lk-6R-Sl8">
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7lk-6R-Sl8">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem id="vQd-R8-1Rk">
@@ -123,43 +123,43 @@
                                 </items>
                             </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g8x-lE-cxU">
-                                <rect key="frame" x="20" y="271" width="374" height="23.5"/>
+                                <rect key="frame" x="20" y="108" width="374" height="23.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zkz-NZ-eyN" customClass="MDCTextField">
-                                <rect key="frame" x="20" y="302.5" width="374" height="30"/>
+                                <rect key="frame" x="20" y="139.5" width="374" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g82-HN-Ptj">
-                                <rect key="frame" x="20" y="359.5" width="374" height="23.5"/>
+                                <rect key="frame" x="20" y="196.5" width="374" height="23.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="paI-VJ-Nkx" customClass="MDCTextField">
-                                <rect key="frame" x="20" y="391" width="374" height="30"/>
+                                <rect key="frame" x="20" y="228" width="374" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fkX-k4-WXk">
-                                <rect key="frame" x="345" y="463" width="51" height="31"/>
+                                <rect key="frame" x="345" y="300" width="51" height="31"/>
                                 <connections>
                                     <action selector="saveToCloudSwitchSelected:" destination="vsg-0u-A6f" eventType="valueChanged" id="xaA-qo-Qcm"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save my data to the cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Luy-GB-rbS">
-                                <rect key="frame" x="20" y="468" width="200.5" height="23.5"/>
+                                <rect key="frame" x="20" y="305" width="200.5" height="23.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k4y-Jj-pq7" customClass="MDCButton">
-                                <rect key="frame" x="20" y="564" width="374" height="45"/>
+                                <rect key="frame" x="20" y="401" width="374" height="45"/>
                                 <color key="backgroundColor" red="0.1333333333" green="0.43137254899999999" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Sd1-lp-gVe"/>
@@ -182,7 +182,7 @@
                             <constraint firstItem="6ip-C5-AAA" firstAttribute="trailing" secondItem="k4y-Jj-pq7" secondAttribute="trailing" constant="20" id="4sd-Og-SAr"/>
                             <constraint firstItem="k4y-Jj-pq7" firstAttribute="leading" secondItem="6ip-C5-AAA" secondAttribute="leading" constant="20" id="E1p-iy-iLw"/>
                             <constraint firstItem="6ip-C5-AAA" firstAttribute="trailing" secondItem="fkX-k4-WXk" secondAttribute="trailing" constant="20" id="HTd-wZ-HUV"/>
-                            <constraint firstItem="g8x-lE-cxU" firstAttribute="top" secondItem="7lk-6R-Sl8" secondAttribute="bottom" constant="183" id="Hle-XG-scE"/>
+                            <constraint firstItem="g8x-lE-cxU" firstAttribute="top" secondItem="7lk-6R-Sl8" secondAttribute="bottom" constant="20" id="Hle-XG-scE"/>
                             <constraint firstItem="6ip-C5-AAA" firstAttribute="trailing" secondItem="g82-HN-Ptj" secondAttribute="trailing" constant="20" id="LZL-QQ-p8O"/>
                             <constraint firstItem="Zkz-NZ-eyN" firstAttribute="leading" secondItem="6ip-C5-AAA" secondAttribute="leading" constant="20" id="MKj-7e-HXd"/>
                             <constraint firstItem="g82-HN-Ptj" firstAttribute="leading" secondItem="6ip-C5-AAA" secondAttribute="leading" constant="20" id="NEF-XJ-JUc"/>
@@ -342,7 +342,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="main_bg" translatesAutoresizingMaskIntoConstraints="NO" id="IpQ-3h-OJx">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="331-q0-XX3">
@@ -535,13 +535,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lawrence Lim" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0G-in-Gwn">
-                                <rect key="frame" x="20" y="262" width="374" height="40"/>
+                                <rect key="frame" x="20" y="254" width="374" height="40"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="29"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WhG-6a-oqv" customClass="MDCButton">
-                                <rect key="frame" x="20" y="666" width="374" height="45"/>
+                                <rect key="frame" x="20" y="658" width="374" height="45"/>
                                 <color key="backgroundColor" red="0.1333333333" green="0.43137254899999999" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="DVF-vG-32I"/>
@@ -555,13 +555,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save my data to the cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3G-FA-9Y1">
-                                <rect key="frame" x="20" y="370" width="200.5" height="23.5"/>
+                                <rect key="frame" x="20" y="362" width="200.5" height="23.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AWb-Iy-uBf">
-                                <rect key="frame" x="345" y="366" width="51" height="31"/>
+                                <rect key="frame" x="345" y="358" width="51" height="31"/>
                                 <connections>
                                     <action selector="saveToCloudSwitchSelected:" destination="vsg-0u-A6f" eventType="valueChanged" id="5aI-ZS-xir"/>
                                 </connections>
@@ -580,7 +580,7 @@
                             <constraint firstItem="rbt-SF-CWq" firstAttribute="leading" secondItem="2mj-mg-MQj" secondAttribute="leading" constant="87" id="Yjk-9q-zAN"/>
                             <constraint firstItem="AWb-Iy-uBf" firstAttribute="top" secondItem="J0G-in-Gwn" secondAttribute="bottom" constant="64" id="dGJ-0I-Vto"/>
                             <constraint firstItem="2mj-mg-MQj" firstAttribute="trailing" secondItem="rbt-SF-CWq" secondAttribute="trailing" constant="87" id="dUG-6r-DZP"/>
-                            <constraint firstItem="J0G-in-Gwn" firstAttribute="top" secondItem="rbt-SF-CWq" secondAttribute="bottom" constant="48" id="kZP-H3-DiP"/>
+                            <constraint firstItem="J0G-in-Gwn" firstAttribute="top" secondItem="rbt-SF-CWq" secondAttribute="bottom" constant="40" id="kZP-H3-DiP"/>
                             <constraint firstItem="rbt-SF-CWq" firstAttribute="top" secondItem="2mj-mg-MQj" secondAttribute="top" constant="42" id="pJB-Bx-OPJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2mj-mg-MQj"/>
@@ -622,7 +622,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="main_bg" translatesAutoresizingMaskIntoConstraints="NO" id="GEs-zl-Fcm">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Pu-5d-136">
