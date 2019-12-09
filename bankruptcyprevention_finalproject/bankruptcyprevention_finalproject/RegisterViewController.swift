@@ -40,6 +40,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let inputUsername = usernameTextField.text!.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         let inputPassword = passwordTextField.text!
         
+        if (!isValidEmail(emailStr: inputUsername)) {
+            let alert = UIAlertController(title: "Username is not an email", message: "Please fill in a valid username.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            
+            return
+        }
+        
         if (inputUsername.isEmpty || inputPassword.isEmpty) {
             let alert = UIAlertController(title: "Blank credentials", message: "Please fill in a valid username and password.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
@@ -93,6 +101,13 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return true
+    }
+    
+    func isValidEmail(emailStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: emailStr)
     }
     
     

@@ -55,6 +55,7 @@ class ReportViewController: UIViewController, ChartViewDelegate {
             dataEntries.append(dataEntry)
         }
         let chartDataSet = BarChartDataSet(entries: dataEntries, label: "Amount")
+        chartDataSet.colors = ChartColorTemplates.material()
         let chartData = BarChartData(dataSet: chartDataSet)
         let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values:months)
@@ -80,6 +81,7 @@ class ReportViewController: UIViewController, ChartViewDelegate {
         barChartView.setScaleEnabled(true)
         barChartView.pinchZoomEnabled = true
         barChartView.scaleYEnabled = false
+        
     }
     
     func fetchAllMonthExpenditures(year: Int) {
