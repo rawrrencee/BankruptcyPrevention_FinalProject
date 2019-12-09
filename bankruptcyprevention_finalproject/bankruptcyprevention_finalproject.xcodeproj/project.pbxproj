@@ -21,6 +21,7 @@
 		212D08E1237E0375002E4FC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 212D08DF237E0375002E4FC4 /* Main.storyboard */; };
 		212D08E6237E0375002E4FC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 212D08E5237E0375002E4FC4 /* Assets.xcassets */; };
 		212D08E9237E0375002E4FC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 212D08E7237E0375002E4FC4 /* LaunchScreen.storyboard */; };
+		218F98F7239E38E30096EB10 /* ViewUploadedImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218F98F6239E38E30096EB10 /* ViewUploadedImageViewController.swift */; };
 		21B0149E23852536002026BB /* EditExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B0149D23852536002026BB /* EditExpenseViewController.swift */; };
 		21DDED46237E54D100E4842A /* ExpenseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DDED45237E54D100E4842A /* ExpenseTableViewCell.swift */; };
 		74CF494B0CA46FBCE3456644 /* Pods_bankruptcyprevention_finalproject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD74EF3072289F08DE7DDE7B /* Pods_bankruptcyprevention_finalproject.framework */; };
@@ -43,6 +44,7 @@
 		212D08E5237E0375002E4FC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		212D08E8237E0375002E4FC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		212D08EA237E0375002E4FC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		218F98F6239E38E30096EB10 /* ViewUploadedImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewUploadedImageViewController.swift; sourceTree = "<group>"; };
 		21B0149D23852536002026BB /* EditExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExpenseViewController.swift; sourceTree = "<group>"; };
 		21DDED45237E54D100E4842A /* ExpenseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTableViewCell.swift; sourceTree = "<group>"; };
 		AD74EF3072289F08DE7DDE7B /* Pods_bankruptcyprevention_finalproject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bankruptcyprevention_finalproject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +92,7 @@
 				212ACAF7237E0DF500A7342C /* ProfileViewController.swift */,
 				212ACAF8237E0DF500A7342C /* ReportViewController.swift */,
 				212D08DF237E0375002E4FC4 /* Main.storyboard */,
+				218F98F6239E38E30096EB10 /* ViewUploadedImageViewController.swift */,
 				21B0149D23852536002026BB /* EditExpenseViewController.swift */,
 				21DDED45237E54D100E4842A /* ExpenseTableViewCell.swift */,
 				212ACB03237E1B3E00A7342C /* TabBarController.swift */,
@@ -247,6 +250,7 @@
 				212ACAFA237E0DF500A7342C /* AddExpenseViewController.swift in Sources */,
 				212ACAF9237E0DF500A7342C /* HomeViewController.swift in Sources */,
 				21DDED46237E54D100E4842A /* ExpenseTableViewCell.swift in Sources */,
+				218F98F7239E38E30096EB10 /* ViewUploadedImageViewController.swift in Sources */,
 				212ACAFC237E0DF500A7342C /* ReportViewController.swift in Sources */,
 				212ACAFE237E106300A7342C /* FirestoreReferenceManager.swift in Sources */,
 			);

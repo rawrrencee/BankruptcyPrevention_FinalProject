@@ -41,7 +41,7 @@ class ReportViewController: UIViewController, ChartViewDelegate {
         
         fetchAllMonthExpenditures(year: Calendar.current.component(.year, from: Date()))
         calculateTotalYearExpenditure()
-        yearExpenditureAmountLabel.text = "\(yearExpenditureAmount.truncate(places: 2))"
+        yearExpenditureAmountLabel.text = "$\(yearExpenditureAmount.truncate(places: 2))"
         barChartView.notifyDataSetChanged()
         customizeChart(dataPoints: months, values: monthlyExpenditureAmounts)
     }
@@ -56,6 +56,11 @@ class ReportViewController: UIViewController, ChartViewDelegate {
         }
         let chartDataSet = BarChartDataSet(entries: dataEntries, label: "Amount")
         let chartData = BarChartData(dataSet: chartDataSet)
+        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values:months)
+        barChartView.xAxis.granularity = 1
+        barChartView.xAxis.granularityEnabled = true
+        barChartView.xAxis.labelCount = 12
         
         barChartView.data = chartData
         
@@ -74,6 +79,7 @@ class ReportViewController: UIViewController, ChartViewDelegate {
         barChartView.dragEnabled = true
         barChartView.setScaleEnabled(true)
         barChartView.pinchZoomEnabled = true
+        barChartView.scaleYEnabled = false
     }
     
     func fetchAllMonthExpenditures(year: Int) {

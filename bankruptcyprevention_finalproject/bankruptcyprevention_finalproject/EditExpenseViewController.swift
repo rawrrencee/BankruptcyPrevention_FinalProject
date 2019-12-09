@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import MaterialComponents
 
-class EditExpenseViewController: UIViewController {
+class EditExpenseViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
     var expenses: [NSManagedObject] = []
     var selectedIndex:Int = Int()
@@ -18,15 +18,22 @@ class EditExpenseViewController: UIViewController {
     var allMonthExpenditures: [NSManagedObject] = []
     var yearExpenditureAmount: Double = 0.00
     
+    var uploadImageSet: Int = 0
+    
     @IBOutlet weak var editAmountTextField: MDCTextField!
     @IBOutlet weak var editDescriptionTextField: MDCTextField!
     @IBOutlet weak var editDatePicker: UIDatePicker!
+    @IBOutlet weak var uploadImageView: UIImageView!
     
     var editAmountController: MDCTextInputControllerOutlined?
     var editDescriptionController: MDCTextInputControllerOutlined?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (expenses[selectedIndex].value(forKey: "image") as? Data != nil) {
+            uploadImageView.image = UIImage(data: expenses[selectedIndex].value(forKey: "image") as! Data)
+        }
         
         let amount:Double = expenses[selectedIndex].value(forKey: "amount") as! Double
         editAmountTextField.text = "\(amount.truncate(places: 2))"
@@ -44,7 +51,70 @@ class EditExpenseViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func viewButtonPressed(_ sender: Any) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        
+        let viewUploadedImageViewController = storyBoard.instantiateViewController(withIdentifier: "viewUploadedImageViewController") as! ViewUploadedImageViewController
+        
+        viewUploadedImageViewController.uploadedImage = uploadImageView.image
+        
+        self.present(viewUploadedImageViewController, animated:true, completion:nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let viewUploadedImageViewController = segue.destination as? ViewUploadedImageViewController
+            else {
+                return
+        }
+        viewUploadedImageViewController.uploadedImage = uploadImageView.image
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        uploadImageSet = 0
+        
+        // The info dictionary may contain multiple representations of the image. You want to use the original.
+        guard let selectedImage = info[.originalImage] as? UIImage else {
+            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        }
+        
+        // Set photoImageView to display the selected image.
+        uploadImageView.image = selectedImage
+        uploadImageSet = 1
+        
+        // Dismiss the picker.
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func selectImageToUpload(_ sender: UITapGestureRecognizer) {
+        
+        let imagePickerController = UIImagePickerController()
+        
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        imagePickerController.mediaTypes = ["public.image"]
+        imagePickerController.sourceType = .camera
+        
+        let actionsheet = UIAlertController(title: "Photo Source", message: "Choose A Source", preferredStyle: .actionSheet)
+        actionsheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action:UIAlertAction)in
+            if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            } else {
+                print("Camera is Not Available")
+            }
+        }))
+        actionsheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action:UIAlertAction)in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }))
+        actionsheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(actionsheet,animated: true, completion: nil)
+    }
+    
     @IBAction func editExpenseSaveButtonPressed(_ sender: Any) {
+        
+        var uploadImage: UIImage? = UIImage()
+        
         guard let inputAmount:Double = Double(editAmountTextField.text!) else {
             let alert = UIAlertController(title: "Not a number", message: "Please enter a number for the amount.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
@@ -52,6 +122,12 @@ class EditExpenseViewController: UIViewController {
             
             return
         }
+        if (uploadImageSet == 1) {
+            uploadImage = uploadImageView.image!
+        } else {
+            uploadImage = nil
+        }
+        
         let inputDescription = editDescriptionTextField.text!
         let originalDate = expenses[selectedIndex].value(forKey: "date") as! Date
         let originalYear = Calendar.current.component(.year, from: originalDate)
@@ -82,14 +158,14 @@ class EditExpenseViewController: UIViewController {
         
         let originalAmount = expenses[selectedIndex].value(forKey: "amount") as! Double
         
-        updateExpense(amount: inputAmount, expenseDescription: inputDescription, userId: userId, originalDate: originalDate, modifiedDate: inputDate, month: month, year: year)
+        updateExpense(amount: inputAmount, expenseDescription: inputDescription, userId: userId, originalDate: originalDate, modifiedDate: inputDate, month: month, year: year, image: uploadImage)
         updateMonthExpenditure(originalMonth: originalMonth, modifiedMonth: month, originalYear: originalYear, modifiedYear: year, amountToDeduct: originalAmount, amountToAdd: inputAmount)
         updateYearExpenditure(userId: userId, year: originalYear)
         updateYearExpenditure(userId: userId, year: year)
         dismiss(animated: true, completion: nil)
     }
     
-    func updateExpense(amount: Double, expenseDescription: String, userId: String, originalDate: Date, modifiedDate: Date, month: Int, year: Int) {
+    func updateExpense(amount: Double, expenseDescription: String, userId: String, originalDate: Date, modifiedDate: Date, month: Int, year: Int, image: UIImage?) {
         
         var expense: [NSManagedObject] = []
         
@@ -116,7 +192,10 @@ class EditExpenseViewController: UIViewController {
         do {
             try expense = managedContext.fetch(fetchRequest)
             
-            print (expense[0])
+            if (image != nil) {
+                let imageData = image?.pngData()
+                expense[0].setValue(imageData, forKey: "image")
+            }
             
             expense[0].setValue(amount, forKeyPath: "amount")
             expense[0].setValue(expenseDescription, forKeyPath: "expenseDescription")

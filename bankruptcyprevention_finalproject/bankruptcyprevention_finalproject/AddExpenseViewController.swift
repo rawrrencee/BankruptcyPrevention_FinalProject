@@ -10,11 +10,14 @@ import UIKit
 import CoreData
 import MaterialComponents
 
-class AddExpenseViewController: UIViewController {
+class AddExpenseViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var amountTextField: MDCTextField!
     @IBOutlet weak var descriptionTextField: MDCTextField!
     @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var uploadImageView: UIImageView!
+    
+    var uploadImageSet: Int = 0
     
     var amountController: MDCTextInputControllerOutlined?
     var descriptionController: MDCTextInputControllerOutlined?
@@ -35,7 +38,52 @@ class AddExpenseViewController: UIViewController {
     @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        uploadImageSet = 0
+        
+        // The info dictionary may contain multiple representations of the image. You want to use the original.
+        guard let selectedImage = info[.originalImage] as? UIImage else {
+            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        }
+        
+        // Set photoImageView to display the selected image.
+        uploadImageView.image = selectedImage
+        uploadImageSet = 1
+        
+        // Dismiss the picker.
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func selectImageToUpload(_ sender: UITapGestureRecognizer) {
+        
+        let imagePickerController = UIImagePickerController()
+        
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        imagePickerController.mediaTypes = ["public.image"]
+        imagePickerController.sourceType = .camera
+        
+        let actionsheet = UIAlertController(title: "Photo Source", message: "Choose A Source", preferredStyle: .actionSheet)
+        actionsheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action:UIAlertAction)in
+            if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            } else {
+                print("Camera is Not Available")
+            }
+        }))
+        actionsheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action:UIAlertAction)in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+        }))
+        actionsheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(actionsheet,animated: true, completion: nil)
+    }
+    
     @IBAction func addButtonPressed(_ sender: Any) {
+        
+        var uploadImage: UIImage? = UIImage()
         
         guard let inputAmount:Double = Double(amountTextField.text!) else {
             let alert = UIAlertController(title: "Not a number", message: "Please enter a number for the amount.", preferredStyle: .alert)
@@ -46,6 +94,11 @@ class AddExpenseViewController: UIViewController {
         }
         let inputDescription = descriptionTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let inputDate = datePicker.date
+        if (uploadImageSet == 1) {
+            uploadImage = uploadImageView.image!
+        } else {
+            uploadImage = nil
+        }
         let year = Calendar.current.component(.year, from: inputDate)
         let month = Calendar.current.component(.month, from: inputDate)
         
@@ -66,15 +119,15 @@ class AddExpenseViewController: UIViewController {
         }
         
         let userId = UserDefaults.standard.object(forKey: "userId") as! String
-
-        saveExpense(amount: inputAmount, expenseDescription: inputDescription, userId: userId, date: inputDate, month: month, year: year)
+        
+        saveExpense(amount: inputAmount, expenseDescription: inputDescription, userId: userId, date: inputDate, month: month, year: year, image: uploadImage)
         updateMonthExpenditure(userId: userId, month: month, year: year, amount: inputAmount)
         updateYearExpenditure(userId: userId, year: year)
         dismiss(animated: true, completion: nil)
         
     }
     
-    func saveExpense(amount: Double, expenseDescription: String, userId: String, date: Date, month: Int, year: Int) {
+    func saveExpense(amount: Double, expenseDescription: String, userId: String, date: Date, month: Int, year: Int, image: UIImage?) {
         
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
@@ -91,7 +144,13 @@ class AddExpenseViewController: UIViewController {
                                        in: managedContext)!
         
         let expense = NSManagedObject(entity: entity,
-                                         insertInto: managedContext)
+                                      insertInto: managedContext)
+        
+        
+        if (image != nil) {
+            let imageData = image?.pngData()
+            expense.setValue(imageData, forKey: "image")
+        }
         
         // 3
         expense.setValue(amount, forKeyPath: "amount")
@@ -171,7 +230,7 @@ class AddExpenseViewController: UIViewController {
                 } catch let error as NSError {
                     print("Could not save. \(error), \(error.userInfo)")
                 }
-
+                
             }
             
         } catch let error as NSError {
@@ -284,6 +343,6 @@ class AddExpenseViewController: UIViewController {
         }
     }
     
-
-
+    
+    
 }
